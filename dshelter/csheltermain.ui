@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CShelterMain</class>
+ <widget class="QWidget" name="CShelterMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CShelterMain</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QToolBox" name="tbxActions">
+     <property name="maximumSize">
+      <size>
+       <width>225</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Plain</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="wgtUsers">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-44</y>
+        <width>206</width>
+        <height>498</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>&amp;Usuarios</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="vloUsers">
+       <property name="spacing">
+        <number>30</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pbLogInOut">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>66</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&amp;Iniciar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbUserOut">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>66</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&amp;Salida</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbUserIn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>66</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&amp;Entrada</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbUserRegist">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>66</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Re&amp;gistrar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbUserRemove">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>66</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Eli&amp;minar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="vspUsers">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="wgtOrg">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>223</width>
+        <height>454</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>&amp;Organizaciones</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="vloOrgs">
+       <property name="spacing">
+        <number>30</number>
+       </property>
+       <property name="topMargin">
+        <number>30</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pbOrgOut">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>S&amp;alida</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbOrgIn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>E&amp;ntrada</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="vspOrgs">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>265</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="wgtWorkers">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>223</width>
+        <height>454</height>
+       </rect>
+      </property>
+      <attribute name="label">
+       <string>&amp;Trabajadores</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="vloWorkers">
+       <property name="spacing">
+        <number>30</number>
+       </property>
+       <property name="topMargin">
+        <number>30</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="pbWrkOut">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Sa&amp;lida</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbWrkIn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Ent&amp;rada</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="vspWorkers">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>265</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QFrame" name="frmContainer">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
