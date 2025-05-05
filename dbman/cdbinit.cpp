@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QtDebug>
 #include <QTimer>
 
 #include <string>
@@ -16,20 +17,25 @@ const std::initializer_list< std::pair<std::string, std::string> > cslTables
      " sex TEXT, picture BLOB, phone TEXT"},
     {"buregister",    //Users registration event (can be more than once)
      "id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, whenreg TEXT, whenrem TEXT,"
-     " wholepic BLOB, docpic BLOB, reasonout TEXT, reasonin text, evicted INTEGER,"
-     " FOREIGN KEY (userid) REFERENCES ausers(id)"},
+     " wholepic BLOB, docpic BLOB, reasonout TEXT, evicted INTEGER, guardid INTEGER,"
+     " FOREIGN KEY (guardid) REFERENCES fguards(id), FOREIGN KEY (userid)"
+     " REFERENCES ausers(id)"},
     {"cusrdayio",     //Daily in/out events
      "id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, whenin TEXT, whenout TEXT"
-     " DEFAULT CURRENT_TIMESTAMP, numticket INTEGER, countdepend INTEGER, FOREIGN"
-     " KEY (userid) REFERENCES ausers(id)"},
+     " DEFAULT CURRENT_TIMESTAMP, numticket INTEGER, countdepend INTEGER, guardid INTEGER,"
+     " FOREIGN KEY (guardid) REFERENCES fguards(id), FOREIGN KEY (userid) REFERENCES"
+     " ausers(id)"},
     {"dworkers",      //Working persons (users can be working but not listed here)
-     "id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT"},
+     "id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, guardid INTEGER, FOREIGN KEY (guardid)"
+     " REFERENCES fguards(id)"},
     {"eworkio",       //Workers in/out events
      "id INTEGER PRIMARY KEY AUTOINCREMENT, workerid INTEGER, whenin TEXT default"
-     " CURRENT_TIMESTAMP, whenout TEXT, FOREIGN KEY (workerid) REFERENCES eworkers(id)"},
+     " CURRENT_TIMESTAMP, whenout TEXT, guardid INTEGER, FOREIGN KEY (guardid)"
+     " REFERENCES fguards(id), FOREIGN KEY (workerid) REFERENCES dworkers(id)"},
     {"fguards",       //Users considered guards, with password
-     "id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, whenreg TEXT, passwd TEXT,"
-     " enabled INTEGER DEFAULT 1, FOREIGN KEY (userid) REFERENCES ausers(id)"},
+     "id INTEGER PRIMARY KEY AUTOINCREMENT, userid INTEGER, username TEXT, whenreg TEXT"
+     " DEFAULT CURRENT_TIMESTAMP, password TEXT DEFAULT NULL, enabled INTEGER DEFAULT 1,"
+     " FOREIGN KEY (userid) REFERENCES ausers(id)"},
     {"gguardio",      //Login/logout events of guards
      "id INTEGER PRIMARY KEY AUTOINCREMENT, guardid INTEGER, whenlog TEXT DEFAULT"
      " CURRENT_TIMESTAMP, logoff INTEGER DEFAULT 1, FOREIGN KEY (guardid) REFERENCES"
@@ -38,7 +44,8 @@ const std::initializer_list< std::pair<std::string, std::string> > cslTables
      "id INTEGER PRIMARY KEY AUTOINCREMENT, orgname TEXT, name TEXT"},
     {"iorgsio",       //Entrada de personas de organizaciones
      "id INTEGER PRIMARY KEY AUTOINCREMENT, orgid INTEGER, whenin TEXT default"
-     " CURRENT_TIMESTAMP, whenout TEXT, FOREIGN KEY (orgid) REFERENCES hopersons(id)"}
+     " CURRENT_TIMESTAMP, whenout TEXT, nmembers INTEGER, guardid INTEGER, FOREIGN KEY"
+     " (guardid) REFERENCES fguards(id), FOREIGN KEY (orgid) REFERENCES hopersons(id)"}
 };
 
 CDbInit::CDbInit(QObject *parent)
@@ -53,7 +60,6 @@ const char *cslLastId[2]{
     "last_insert_rowid",  //QSQLITE
     "lastval"             //PostgreSQL
 };
-
 const char *CDbInit::lastIdQuery()
 {
     return m_postgres ? cslLastId[1] : cslLastId[0];
@@ -69,12 +75,13 @@ bool CDbInit::openOnly()
     db.setDatabaseName(csDbFile);
     if (!db.open())
     {
-        emit messageOut("Can't open DB -> " + db.lastError().text(), true);
-        emit done();
+        qCritical() << QString("No se puede abrir la base de datos -> %1)").arg(
+                           db.lastError().text()).toUtf8().data();
+        QTimer::singleShot(150, this, &CDbInit::done);
         return false;
     }
-    emit messageOut("Database opened...", false);
-    if (!m_internal) emit done();
+    qInfo() << "Base de datos abierta...";
+    if (!m_internal) QTimer::singleShot(150, this, &CDbInit::done);
     return true;
 }
 
@@ -100,37 +107,17 @@ void CDbInit::internalRun()
 
         if (!qy.exec(sq))
         {
-            emit messageOut(QString("Cannot create table (%1) -> %2")
-                                .arg(tn, qy.lastError().text()), true);
-            emit done();
+            qCritical() << QString("No se puede crear la table (%1) -> %2")
+                                .arg(tn, qy.lastError().text()).toUtf8().data();
+            QTimer::singleShot(150, this, &CDbInit::done);
             return;
         }
     }
 
-    emit messageOut("Tables created OK", false);
-    emit done();
+    qInfo() << "Las tablas han sido readas satisfactoriamente!";
+    QTimer::singleShot(150, this, &CDbInit::done);
 }
 
-QString encryptPassword(const QString &password, const QString &key) {
-    QByteArray passwordBytes = password.toUtf8();
-    QByteArray keyBytes = key.toUtf8();
-    QByteArray encryptedBytes;
 
-    for (int i = 0; i < passwordBytes.size(); ++i) {
-        encryptedBytes.append(passwordBytes[i] ^ keyBytes[i % keyBytes.size()]);
-    }
 
-    return QString(encryptedBytes.toHex());
-}
 
-QString decryptPassword(const QString &encryptedPassword, const QString &key) {
-    QByteArray encryptedBytes = QByteArray::fromHex(encryptedPassword.toUtf8());
-    QByteArray keyBytes = key.toUtf8();
-    QByteArray decryptedBytes;
-
-    for (int i = 0; i < encryptedBytes.size(); ++i) {
-        decryptedBytes.append(encryptedBytes[i] ^ keyBytes[i % keyBytes.size()]);
-    }
-
-    return QString(decryptedBytes);
-}

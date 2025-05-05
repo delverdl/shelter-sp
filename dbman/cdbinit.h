@@ -19,7 +19,6 @@ public:
 
 signals:
     void done();
-    void messageOut(const QString& msg, bool isError);
 
 public slots:
     void run();
@@ -31,6 +30,7 @@ private slots:
 private:
     bool m_internal;
     bool m_postgres;
+
 };
 
 #endif // CDBINIT_H

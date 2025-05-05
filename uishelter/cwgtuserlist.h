@@ -6,6 +6,7 @@
 
 #include <cdbinit.h>
 
+class QLabel;
 namespace Ui {
 class CWgtUserList;
 }
@@ -22,12 +23,15 @@ public:
 
     void setDbInit(CDbInit *dbi_);
 
-signals:
-    void queryError(const QString &err);
+    static QString savePic(const QPixmap &pm);
+    static void showPic(const QString &data, QLabel *lbl);
+    static const char *listQueryTail();
 
 public slots:
-    void populateDb(bool addVisible);
+    void populateDb(bool addVisible = false);
     void addOne();
+    void editOne();
+    void setCurrentGuard(int guardId = 0);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -36,8 +40,10 @@ private:
     Ui::CWgtUserList *ui;
     QSqlQueryModel *model;
     CDbInit *dbi;
+    int guard;
 
-    void showPic(const QString &data);
+    void refreshModel();
+    void setHeaders();
 
 private slots:
     void clicked(const QModelIndex &midx);

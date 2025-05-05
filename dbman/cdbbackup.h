@@ -17,6 +17,7 @@ public:
     explicit CDbBackup(QObject *parent = nullptr);
 
     void makeBackup(const QString &sWhere = QString());
+    static QStringList fileContents(const QString &fname);
 
     HashedPairs externalDrives() const;
 
@@ -28,7 +29,6 @@ signals:
 private:
     QRegularExpression  m_rx;
 
-    QStringList fileContents(const QString &fname) const;
     bool ensureBackupFolder(const QString &origf);
 };
 

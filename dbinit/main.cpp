@@ -19,12 +19,6 @@ int main(int argc, char *argv[])
     CDbInit dbi(&a);
     QString ch;
 
-
-    xo << "Table names" << Qt::endl << "----------" << Qt::endl;
-    auto tns = CDbInit::tables();
-    foreach (const std::string &tn, tns)
-        xo << tn.c_str() << Qt::endl;
-
     if (QFile::exists(CDbInit::dbFile()))
     {
         do
@@ -48,9 +42,6 @@ int main(int argc, char *argv[])
     }
 
     a.connect(&dbi, &CDbInit::done, &a, &QCoreApplication::quit);
-    a.connect(&dbi, &CDbInit::messageOut, [](const QString& m) {
-        xo << m << Qt::endl;
-    });
     dbi.run();
     return a.exec();
 }

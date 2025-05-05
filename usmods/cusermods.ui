@@ -9,18 +9,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
-    <height>417</height>
+    <width>874</width>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Usuarios</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gloUserMods">
    <item row="0" column="0">
     <widget class="QTabWidget" name="tw">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabUsers">
       <attribute name="title">
@@ -31,32 +31,55 @@
       <attribute name="title">
        <string>Guardias</string>
       </attribute>
-      <widget class="QPushButton" name="pbAdd">
-       <property name="geometry">
-        <rect>
-         <x>510</x>
-         <y>280</y>
-         <width>75</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>A&amp;dicionar</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="geometry">
-        <rect>
-         <x>510</x>
-         <y>330</y>
-         <width>75</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>PushButton</string>
-       </property>
-      </widget>
+      <layout class="QGridLayout" name="gloGuards">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pbRemove">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>&amp;Quitar</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pbAdd">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>A&amp;dicionar</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="4">
+        <widget class="QTableView" name="tvwGuards">
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <spacer name="hspGuardButtons">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>415</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pbReset">
+         <property name="text">
+          <string>&amp;Restablecer</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>

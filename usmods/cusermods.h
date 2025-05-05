@@ -24,6 +24,14 @@ private:
     Ui::CUserMods *ui;
     CDbInit *dbi;
     CWgtUserList *wusers;
+    QSqlQueryModel *model;
 
+    void initList();
+
+private slots:
+    void addClicked();
+    void removeClicked();
+    void resetClicked();
+    void refreshModel();
 };
 #endif // CUSERMODS_H

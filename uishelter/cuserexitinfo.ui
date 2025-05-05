@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CUserExitInfo</class>
+ <widget class="QDialog" name="CUserExitInfo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>393</width>
+    <height>305</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="vloExitInfo">
+   <item>
+    <widget class="QLabel" name="lblDateTime">
+     <property name="text">
+      <string>&amp;Fecha y hora de salida</string>
+     </property>
+     <property name="buddy">
+      <cstring>dteExit</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDateTimeEdit" name="dteExit">
+     <property name="displayFormat">
+      <string>yyyy/MM/dd HH:mm</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="ckbEvicted">
+     <property name="text">
+      <string>E&amp;xpulsado(a)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblReasonOut">
+     <property name="text">
+      <string>Ra&amp;zones de salida</string>
+     </property>
+     <property name="buddy">
+      <cstring>tedReason</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="tedReason"/>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="bbxButtons">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>dteExit</tabstop>
+  <tabstop>ckbEvicted</tabstop>
+  <tabstop>tedReason</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>bbxButtons</sender>
+   <signal>accepted()</signal>
+   <receiver>CUserExitInfo</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bbxButtons</sender>
+   <signal>rejected()</signal>
+   <receiver>CUserExitInfo</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -11,15 +11,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
 
-add_library(uishelter SHARED
+qt6_add_library(uishelter SHARED
+  MANUAL_FINALIZATION
   uishelter_global.h
-  uishelter.cpp
-  uishelter.h
-  cwgtuserlist.h
-  cwgtuserlist.cpp
-  cwgtuserlist.ui
+  uishelter.cpp uishelter.h
+  cwgtuserlist.h cwgtuserlist.cpp cwgtuserlist.ui
   cnewuser.h cnewuser.cpp cnewuser.ui
   cusercheck.h cusercheck.cpp cusercheck.ui
+  uishelter.rc
+  cuserexitinfo.h cuserexitinfo.cpp cuserexitinfo.ui
+  cpasswordinput.h cpasswordinput.cpp cpasswordinput.ui
 )
 
 target_link_libraries(uishelter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets

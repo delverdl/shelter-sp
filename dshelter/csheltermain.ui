@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>CShelterMain</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gloShelter">
    <item row="0" column="0">
     <widget class="QToolBox" name="tbxActions">
      <property name="maximumSize">
@@ -34,13 +34,13 @@
       <enum>QFrame::Shadow::Plain</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="wgtUsers">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-44</y>
+        <y>0</y>
         <width>206</width>
         <height>498</height>
        </rect>

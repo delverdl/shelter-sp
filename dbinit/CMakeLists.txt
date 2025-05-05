@@ -14,13 +14,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Sql)
 
 add_executable(dbinit
   main.cpp
+  dbinit.rc
 )
 
-target_link_libraries(dbinit
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Sql
-    dbman
-)
+target_link_libraries(dbinit Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Sql dbman)
 
 include(GNUInstallDirs)
 install(TARGETS dbinit

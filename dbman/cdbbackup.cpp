@@ -26,7 +26,8 @@ void CDbBackup::makeBackup(const QString &sWhere)
         emit cantProcessBackupFolder();
     else
     {
-        QFile::remove(where); //Remove destination
+        QFile::remove(where); //Remove destination before copying or
+                              //Origin if not copying
         if (justCopy && !QFile::copy(CDbInit::dbFile(), where))
             emit cantCreateBackup();
     }
@@ -169,7 +170,7 @@ CDbBackup::HashedPairs CDbBackup::externalDrives() const
     return r;
 }
 
-QStringList CDbBackup::fileContents(const QString &fname) const
+QStringList CDbBackup::fileContents(const QString &fname)
 {
     QFile f(fname);
     QStringList lines;
@@ -194,6 +195,7 @@ bool CDbBackup::ensureBackupFolder(const QString &origf)
     QString bkf = QString("%1/backups").arg(QDir::currentPath());
     QDir d(bkf);
     QFileInfo fio(origf);
+    bool r = false;
 
     if (!d.exists() && !d.mkdir(bkf))
         return false; //cannot create backups directory
@@ -203,7 +205,7 @@ bool CDbBackup::ensureBackupFolder(const QString &origf)
 
     //Move database to backup folder
     if (!QFile::rename(origf, dfn))
-        return false;
+        return r;
 
     //Archive files only when needed
     auto el = d.entryInfoList(QDir::Files, QDir::Name);
@@ -223,19 +225,24 @@ bool CDbBackup::ensureBackupFolder(const QString &origf)
                 lbkFiles << fi.fileName();
         }
     }
-    if (lbkFiles.count() > 29)
+    if (lbkFiles.count() > 4 /*29*/)
     {   //Archive backups
         QProcess p;
 
         dfn = QDir::currentPath();
         p.setProgram(QString("%1/%2").arg(dfn, "comp.exe"));
-        p.setArguments(QStringList() << "a" << "archive.7z" << lbkFiles);
+        p.setArguments(QStringList() << "a" << "-sdel" << "archive.7z" << lbkFiles);
         QDir::setCurrent(bkf); //Set current dir to backups
 
         p.start();
-        if (!p.waitForStarted())
-            return false;
-        p.waitForFinished(); //Wait compression end (THIS BLOCKS MAIN THREAD)
+        if (p.waitForStarted())
+        {
+            p.waitForFinished(); //Wait compression end (THIS BLOCKS MAIN THREAD)
+            r = true;
+        }
+        else
+            r = false;
+        QDir::setCurrent(dfn); //Restore current dir
     }
-    return true;
+    return r;
 }
